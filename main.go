@@ -67,13 +67,21 @@ func main() {
 	if *cfgFile != "" {
 		cfg.read(*cfgFile)
 	}
+	log.Println("Rewriting types...")
 	rewriteTypes(cfg, prog)
+	log.Println("Rewriting syntax...")
 	rewriteSyntax(cfg, prog)
+	log.Println("Rewriting len...")
 	rewriteLen(cfg, prog)
+	log.Println("Fixing go types...")
 	fixGoTypes(cfg, prog)
+	log.Println("Simplifying bool...")
 	simplifyBool(cfg, prog)
+	log.Println("Renaming declarations...")
 	renameDecls(cfg, prog)
+	log.Println("Exporting declaration...")
 	exportDecls(cfg, prog)
+	log.Println("Writing go files...")
 	writeGoFiles(cfg, prog)
 
 	for _, d := range cfg.diffs {
